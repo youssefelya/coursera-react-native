@@ -15,8 +15,8 @@ export default class About extends React.Component{
              <View style={{height:'50%'}}>
             <Card 
             title="Our History"
-            
             >
+            
             <View style={{  justifyContent:'flex-start'}}>
             <Text >{ history.RestaurantHistory}</Text>
             <Text  >{ history.RestaurantTreace}</Text>
