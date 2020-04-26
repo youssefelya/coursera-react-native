@@ -4,7 +4,6 @@ import { Card, ListItem } from 'react-native-elements';
 import * as history from './OurHistory/History';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-import {LEADERS} from '../shared/leaders'
 
 const {height, width} = Dimensions.get('window');
 
@@ -17,15 +16,7 @@ const mapStateToProps = state => {
   function History(){
     
   }
-export default class About extends React.Component{
-
-  constructor(props){
-    super(props);
-    this.state = {
-      leaders : LEADERS,
-    }
-  }
-
+class About extends React.Component{
 
     static navigationOptions = {
 		title: 'About Us',
@@ -58,7 +49,7 @@ export default class About extends React.Component{
             <Card 
             title ='Corporate Leadership'>
             <FlatList
-            data = {this.state.leaders}
+            data = {this.props.leaders.leaders}
             renderItem = {renderLeader}
             keyExtractor = {item=>item.id.toString()}
              />
@@ -75,4 +66,6 @@ const styles = StyleSheet.create({
         margin:30,
        
     }
-})
+});
+
+export default connect(mapStateToProps)(About);
