@@ -1,37 +1,71 @@
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions, FlatList} from 'react-native';
-import { Card } from 'react-native-elements';
+import {View, Text, StyleSheet, Dimensions, FlatList, ScrollView} from 'react-native';
+import { Card, ListItem } from 'react-native-elements';
 import * as history from './OurHistory/History';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
+import {LEADERS} from '../shared/leaders'
 
 const {height, width} = Dimensions.get('window');
+
+const mapStateToProps = state => {
+    return {
+      leaders: state.leaders
+    }
+  }
+  
+  function History(){
+    
+  }
 export default class About extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      leaders : LEADERS,
+    }
+  }
+
 
     static navigationOptions = {
 		title: 'About Us',
     };
     render(){
+      const {param } = this.props.navigation.state;
+      const renderLeader = ({item, index}) =>{
         return(
-            <View style={{flex:1, justifyContent:'space-around'}}> 
-             <View style={{height:'50%'}}>
+          <ListItem 
+           roundAvatar 
+           key = {index}
+           title = {item.name}
+           subtitle = {item.description}
+           hideChevron = {true}
+           // @ts-ignore
+           leftAvatar = {{source : {uri : baseUrl+item.image}}}
+           />
+        );
+      }
+        return(
+            <ScrollView>
+           
             <Card 
             title="Our History"
             >
-            
             <View style={{  justifyContent:'flex-start'}}>
-            <Text >{ history.RestaurantHistory}</Text>
-            <Text  >{ history.RestaurantTreace}</Text>
+            <Text style = {{margin : 10}}>{ history.RestaurantHistory}</Text>
             </View>
             </Card>
-            </View>
-            <View style={{height : '48%'}}>
-            { <Card 
-            title="Our History"
-            >
-            <Text style ={styles.text}>{ history.RestaurantHistory}</Text>
-            <Text style ={styles.text}>{ history.RestaurantTreace}</Text>
-            </Card> }
-            </View>
-            </View>
+            <Card 
+            title ='Corporate Leadership'>
+            <FlatList
+            data = {this.state.leaders}
+            renderItem = {renderLeader}
+            keyExtractor = {item=>item.id.toString()}
+             />
+            </Card>
+          
+            </ScrollView>
+            
             
         )
     }
