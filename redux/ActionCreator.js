@@ -11,6 +11,7 @@ export const fetchComments = () => (dispatch) => {
 					var error = new Error(
 						'Error ' + response.status + ': ' + response.statusText
 					);
+					// @ts-ignore
 					error.response = response;
 					throw error;
 				}
@@ -49,6 +50,7 @@ export const fetchDishes = () => (dispatch) => {
 					var error = new Error(
 						'Error ' + response.status + ': ' + response.statusText
 					);
+					// @ts-ignore
 					error.response = response;
 					throw error;
 				}
@@ -89,6 +91,7 @@ export const fetchPromos = () => (dispatch) => {
 					var error = new Error(
 						'Error ' + response.status + ': ' + response.statusText
 					);
+					// @ts-ignore
 					error.response = response;
 					throw error;
 				}
@@ -129,6 +132,7 @@ export const fetchLeaders = () => (dispatch) => {
 					var error = new Error(
 						'Error ' + response.status + ': ' + response.statusText
 					);
+					// @ts-ignore
 					error.response = response;
 					throw error;
 				}
