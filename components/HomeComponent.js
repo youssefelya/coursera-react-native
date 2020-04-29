@@ -11,11 +11,11 @@ import { baseUrl } from '../shared/baseUrl';
 const mapStateToProps = state => {
     return {
       dishes: state.dishes,
-	  promotions : state.promotions,
-	  leaders : state.leaders,
+      comments: state.comments,
+      promotions: state.promotions,
+      leaders: state.leaders
     }
   }
-  
 
 function RenderItem(props) {
 	const item = props.item;
@@ -50,16 +50,9 @@ class Home extends React.Component {
 	render() {
 		return (
 			<ScrollView>
-				<RenderItem
-					item={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
-				></RenderItem>
-                <RenderItem
-					item={this.props.promotions.promotions.filter((dish) => dish.featured)[0]}
-				></RenderItem>
-
-                <RenderItem
-					item={this.props.leaders.leaders.filter((dish) => dish.featured)[0]}
-				></RenderItem>
+			<RenderItem item={this.props.dishes.dishes.filter((dish) => dish.featured)[0]} />
+                <RenderItem item={this.props.promotions.promotions.filter((promo) => promo.featured)[0]} />
+                <RenderItem item={this.props.leaders.leaders.filter((leader) => leader.featured)[0]} />
                
 			</ScrollView>
 		);

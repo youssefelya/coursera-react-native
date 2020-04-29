@@ -13,7 +13,7 @@ export const leaders = (state = initialState, action) => {
 				...state,
 				isLoading: false,
 				errMess: null,
-				leaders: action.pyload,
+				leaders: action.payload,
 			};
 		case ActionTypes.LEADERS_LOADING:
 			return { ...state, isLoading: true, errMess: null, leaders: [] };

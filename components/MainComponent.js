@@ -19,6 +19,29 @@ import Home from './HomeComponent';
 import Contact from './Contact';
 import About from './About';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import {
+	fetchDishes,
+	fetchComments,
+	fetchPromos,
+	fetchLeaders,
+} from '../redux/ActionCreators';
+
+const mapStateToProps = (state) => {
+	return {
+		dishes: state.dishes,
+		comments: state.comments,
+		promotions: state.promotions,
+		leaders: state.leaders,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => ({
+	fetchDishes: () => dispatch(fetchDishes()),
+	fetchComments: () => dispatch(fetchComments()),
+	fetchPromos: () => dispatch(fetchPromos()),
+	fetchLeaders: () => dispatch(fetchLeaders()),
+});
 
 const MenuNavigator = createStackNavigator(
 	{
@@ -142,6 +165,7 @@ const CustomDrawerContentComponent = (props) => (
 			<View style={styles.drawerHeader}>
 				<View style={{ flex: 1 }}>
 					<Image
+						// @ts-ignore
 						source={require('./images/logo.png')}
 						style={styles.drawerImage}
 					/>
@@ -214,7 +238,13 @@ const MainNavigator = createDrawerNavigator(
 	}
 );
 
-export default class Main extends React.Component {
+class Main extends React.Component {
+	componentDidMount() {
+		this.props.fetchDishes();
+		this.props.fetchComments();
+		this.props.fetchPromos();
+		this.props.fetchLeaders();
+	}
 	render() {
 		return (
 			<View
@@ -223,7 +253,8 @@ export default class Main extends React.Component {
 					paddingTop:
 						Platform.OS === 'ios'
 							? 0
-							: // @ts-ignore
+							: 
+							  // @ts-ignore
 							  Expo.Constants.statusBarHeight,
 				}}
 			>
@@ -256,3 +287,5 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

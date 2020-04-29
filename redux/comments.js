@@ -13,7 +13,7 @@ export const comments = (state = initialState, action) => {
 				...state,
 				isLoading: false,
 				errMess: null,
-				comments: action.pyload,
+				comments: action.payload,
 			}
 		case ActionTypes.COMMENTS_FAILED:
 			return {

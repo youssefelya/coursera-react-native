@@ -13,7 +13,7 @@ export const dishes = (state = initialState, action) => {
 				...state,
 				isLoading: false,
 				errMess: null,
-				dishes: action.pyload,
+				dishes: action.payload,
 			};
 		case ActionTypes.DISHES_LOADING:
 			return { ...state, isLoading: true, errMess: null, dishes: [] };

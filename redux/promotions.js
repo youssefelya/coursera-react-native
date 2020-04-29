@@ -8,16 +8,16 @@ const initialState = {
 
 export const promotions = (state = initialState, action) => {
 	switch (action.type) {
-		case ActionTypes.ADD_PROMS:
+		case ActionTypes.ADD_PROMOS:
 			return {
 				...state,
 				isLoading: false,
 				errMess: null,
-				promotions: action.pyload,
+				promotions: action.payload,
 			};
-		case ActionTypes.PROMS_LOADING:
+		case ActionTypes.PROMOS_LOADING:
 			return { ...state, isLoading: true, errMess: null, promotions: [] };
-		case ActionTypes.PROMS_FAILED:
+		case ActionTypes.PROMOS_FAILED:
 			return {
 				...state,
 				isLoading: false,
