@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, FlatList, ScrollView } from 'react-native';
+import { View, Text, FlatList, ScrollView , StyleSheet} from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite } from '../redux/ActionCreators';
-
+//https://github.com/axingjia/coursera-react-native/blob/master/components/DishdetailComponent.js
 const mapStateToProps = state => {
     return {
       dishes: state.dishes,
@@ -73,9 +73,20 @@ class Dishdetail extends React.Component {
 		super(props);
 		this.state = {
             favorites : [],
+            author:"",
+            rating:0,
+            comment:"",
+            commentFormModal:false
 		};
     }
-    
+    toggleCommentFormModal(){
+        this.setState({commentFormModal: !this.state.commentFormModal});
+    }
+    submitForm(dishId,rating,author,comment){
+        // this.props.postComment(dishId);
+        // this.props.postComment(dishId, rating, author, comment);
+        this.props.postComment(dishId, rating, author, comment);
+    }
     markFavorite(dishId){
         this.setState({favorites : this.state.favorites.concat(dishId)});
     }
@@ -97,6 +108,38 @@ class Dishdetail extends React.Component {
 	}
 }
 
+const styles = StyleSheet.create({
+    formRow: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        margin: 20
+      },
+      formLabel: {
+          fontSize: 18,
+          flex: 2
+      },
+      formItem: {
+          flex: 1
+      },
+      modal: {
+         justifyContent: 'center',
+         margin: 20
+      },
+      modalTitle: {
+          fontSize: 24,
+          fontWeight: 'bold',
+          backgroundColor: '#512DA8',
+          textAlign: 'center',
+          color: 'white',
+          marginBottom: 20
+      },
+      modalText: {
+          fontSize: 18,
+          margin: 10
+      }
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dishdetail);
