@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite } from '../redux/ActionCreators';
 import {postComment } from '../redux/ActionCreators';
-//https://github.com/axingjia/coursera-react-native/blob/master/components/DishdetailComponent.js
+
 const mapStateToProps = state => {
     return {
       dishes: state.dishes,
@@ -64,7 +64,12 @@ function RenderComments(props) {
         return (
             <View key={index} style={{margin: 10}}>
                 <Text style={{fontSize: 14}}>{item.comment}</Text>
-                <Text style={{fontSize: 12}}>{item.rating} Stars</Text>
+                <Rating
+                    ratingCount={item.rating}
+                    readonly ={ true}
+                    style={{ fontSize:3 }}
+                    />
+
                 <Text style={{fontSize: 12}}>{'-- ' + item.author + ', ' + item.date} </Text>
             </View>
         );
@@ -156,7 +161,7 @@ class Dishdetail extends React.Component {
                    <View >
                 <Button
                     onPress={() => {this.submitComment(dishId) }}
-                    title="Reserve"
+                    title="Submit"
                     color="#512DA8"
                     accessibilityLabel="Learn more about this purple button"
                     />

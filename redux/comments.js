@@ -22,6 +22,13 @@ export const comments = (state = initialState, action) => {
 				errMess: action.payload,
 				comments: [],
 			};
+		// case  ActionTypes.ADD_COMMENT : 
+		//    return {
+		// 	   ...state,
+		// 	   isLoading: false,
+		// 	   errMess: null,
+		// 	   comments:[...comments, action.payload]
+		//    }
 		default:
 			return state;
 	}
