@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, ScrollView , StyleSheet, Modal, Button,TextInput} from 'react-native';
+import { View, Text, FlatList, ScrollView ,Alert, PanResponder, StyleSheet, Modal, Button,TextInput} from 'react-native';
 import { Card, Icon, Rating, AirbnbRating, Input} from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
