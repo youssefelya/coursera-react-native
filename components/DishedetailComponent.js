@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite } from '../redux/ActionCreators';
 import {postComment } from '../redux/ActionCreators';
+import * as Animatable from 'react-native-animatable';
 
 const mapStateToProps = state => {
     return {
@@ -62,6 +63,7 @@ function RenderComments(props) {
     const renderCommentItem = ({item, index}) => {
         
         return (
+            
             <View key={index} style={{margin: 10}}>
                 <Text style={{fontSize: 14}}>{item.comment}</Text>
                 <Rating
@@ -76,6 +78,7 @@ function RenderComments(props) {
     };
     
     return (
+           <Animatable.View animation='fadeInUp' duration={2000} delay={1000}>
         <Card title='Comments' >
         <FlatList 
             data={comments}
@@ -83,6 +86,7 @@ function RenderComments(props) {
             keyExtractor={item => item.id.toString()}
             />
         </Card>
+        </Animatable.View>
     );
 }
 
@@ -123,26 +127,24 @@ class Dishdetail extends React.Component {
         const dishId = this.props.navigation.getParam('dishId', '');
 		return (
 			<ScrollView>
+            <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
 				<RenderDish dish={this.props.dishes.dishes[+dishId]}
                 favorite = {this.props.favorites.some(el => el === dishId)}
                 onPress = {() =>this.markFavorite(dishId)}
                 onPressAddComment= {()=>{this.toggleCommentFormModal()} }
                  />
-
                  <Modal animationType = {"slide"} transparent = {false}
                     visible = {this.state.commentFormModal}
                     onDismiss = {() => {}}
                     onRequestClose = {() =>{} }
                     >
                     <View style = {styles.modal}>
-
                     <Rating
                     showRating
                     ratingCount={5}
                     onFinishRating={(rating)=>{this.setState({ratingCount:rating})}}
                     //style={{ paddingVertical: 10 }}
                     />
-            
                     <Input
                         placeholder="Author"
                         leftIcon={{ type: 'font-awesome', name: 'user-o' }}
@@ -173,12 +175,10 @@ class Dishdetail extends React.Component {
                             />
                             </View>
                     </View>
-               
                 </Modal>
-
-
                  <RenderComments comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} />
-			</ScrollView>
+                 </Animatable.View>
+            </ScrollView>
 		);
 	}
 }
