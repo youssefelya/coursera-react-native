@@ -42,7 +42,7 @@ function RenderDish(props) {
                    <Icon 
                    raised 
                    reverse 
-                   name={props.favorite ? 'pencil' : 'pencil'}
+                   name={ 'pencil'}
                    type='font-awesome'
                    color='#12E'
                    onPress = {()=> props.onPressAddComment()}
@@ -90,7 +90,7 @@ class Dishdetail extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            favorites : [],
+            //favorites : [],
             author:"",
             comment:"",
             commentFormModal:false,
@@ -102,15 +102,15 @@ class Dishdetail extends React.Component {
         this.setState({commentFormModal: !this.state.commentFormModal});
    
     }
-    resetForm(){}
+   
     submitComment(dishId){
       this.props.postComment(dishId, this.state.ratingCount, this.state.author, this.state.comment);
       this.setState({commentFormModal:false})
     }
  
     markFavorite(dishId){
-        this.setState({favorites : this.state.favorites.concat(dishId)});
-        //this.props.postFavorite(dishId)
+       // this.setState({favorites : this.state.favorites.concat(dishId)});
+        this.props.postFavorite(dishId)
     }
     postComment(dishId, rating, author,comment){
         this.props.postComment(dishId, rating, author,comment);
@@ -124,7 +124,7 @@ class Dishdetail extends React.Component {
 		return (
 			<ScrollView>
 				<RenderDish dish={this.props.dishes.dishes[+dishId]}
-                favorite = {this.state.favorites.some(el => el === dishId)}
+                favorite = {this.props.favorites.some(el => el === dishId)}
                 onPress = {() =>this.markFavorite(dishId)}
                 onPressAddComment= {()=>{this.toggleCommentFormModal()} }
                  />
