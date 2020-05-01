@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal, Alert } from 'react-native';
 import { Card } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker'
 
@@ -25,8 +25,14 @@ class Reservation extends Component {
     }
 
     handleReservation() {
-        console.log(JSON.stringify(this.state));
-        this.toggelModal();
+        const reservation='Your Reservation \n';
+        const guests = 'Number of Guests '+this.state.guests+' \n ';
+        let smoking = 'Smoking ';
+        if(this.state.smoking){smoking = 'Smoking : YES \n'; }else{smoking = 'Smoking : NO \n'; }
+        const date ='Date and Time: ' +this.state.date+' \n';
+         Alert.alert(reservation+guests+smoking+date);
+      //  console.log('JSON --> ',JSON.stringify(this.state));
+        //this.toggelModal();
     }
     resetForm(){
         this.setState({
@@ -94,6 +100,7 @@ class Reservation extends Component {
                     color="#512DA8"
                     accessibilityLabel="Learn more about this purple button"
                     />
+                    
                 </View>
                     <Modal
                     animationType={'slide'}
@@ -102,8 +109,8 @@ class Reservation extends Component {
                     onDismiss={()=>{this.toggelModal(); this.resetForm()}}
                     onRequestClose={()=>{this.toggelModal(); this.resetForm()}}
                     >
-                        <View style={styles.modal}>
-                            <Text style={styles.modalTitle} >Your Reservation</Text>
+                <View style={styles.modal}>
+                <Text style={styles.modalTitle} >Your Reservation</Text>
                 <Text style={styles.modalText}>Number of Guests : {this.state.guests}</Text>
                 <Text style={styles.modalText}>Smoking ? : {this.state.smoking ? "Yes": "NO"}</Text>
                 <Text style={styles.modalText}>Date and Time: {this.state.date}</Text>
