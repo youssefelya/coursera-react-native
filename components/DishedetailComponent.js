@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, FlatList, ScrollView ,Alert, PanResponder, StyleSheet, Modal, Button,TextInput} from 'react-native';
+import { View, Text, FlatList, ScrollView ,StyleSheet, Modal, Button,Share} from 'react-native';
 import { Card, Icon, Rating, AirbnbRating, Input} from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite } from '../redux/ActionCreators';
 import {postComment } from '../redux/ActionCreators';
 import * as Animatable from 'react-native-animatable';
+
 
 const mapStateToProps = state => {
     return {
@@ -22,7 +23,17 @@ const mapDispatchToProps = dispatch => ({
 })
 
 function RenderDish(props) {
-	const dish = props.dish;
+    const dish = props.dish;
+    const shareDish =(title, message, url)=>{
+        Share.share({
+            title:title,
+            message:title+' : '+message+' '+url,
+            url : url,
+        },{
+            dialogTitle :'Share '+title
+        }
+        );
+    }
 	if (dish != null) {
 		return (
 			<Card
@@ -48,9 +59,19 @@ function RenderDish(props) {
                    color='#12E'
                    onPress = {()=> props.onPressAddComment()}
                    />
+                   <Icon 
+                   raised 
+                   reverse 
+                   name ="share"
+                   type ='font-awsome'
+                   color ="#51D2A8"
+                   //style={styles.car}
+                    onPress = {()=>{shareDish(dish.name, dish.description, baseUrl+dish.image)}}
+                   />
                    </View>
 			</Card>
-		);
+        );
+     
 	} else {
 		return <View></View>;
 	}
