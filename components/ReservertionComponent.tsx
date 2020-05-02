@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal, Alert } from 'react-native';
 import { Card } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker'
+import { Notifications  }from 'expo';
+import * as Permissions from 'expo-permissions';
 
 class Reservation extends Component {
 
@@ -25,20 +27,53 @@ class Reservation extends Component {
     }
 
     handleReservation() {
-        const reservation='Your Reservation \n';
-        const guests = 'Number of Guests '+this.state.guests+' \n ';
-        let smoking = 'Smoking ';
-        if(this.state.smoking){smoking = 'Smoking : YES \n'; }else{smoking = 'Smoking : NO \n'; }
-        const date ='Date and Time: ' +this.state.date+' \n';
-         Alert.alert(reservation+guests+smoking+date);
-      //  console.log('JSON --> ',JSON.stringify(this.state));
-        //this.toggelModal();
+       let message = 'Number of Guests : '+this.state.guests+
+                     '\nSmoking ? '+this.state.smoking+
+                     '\nDate and Time '+this.state.date;
+
+         Alert.alert(
+             'Your Reservation OK ?',
+             message,
+             [
+                {text : 'Cancel ', onPress :()=>{console.log('Reservation Cancelled'); this.resetForm()}},
+                {text : 'OK ', onPress:()=>{  this.presentLocalNotification(this.state.date); this.resetForm()}}    
+             ],
+             {cancelable : false}
+         );
+     
     }
     resetForm(){
         this.setState({
             guests: 1,
             smoking: false,
             date: ''
+        });
+    }
+
+    async obtainNotificationPermission() {
+        let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+            if (permission.status !== 'granted') {
+                Alert.alert('Permission not granted to show notifications');
+            }
+        }
+        return permission;
+    }
+
+    async presentLocalNotification(date) {
+        await this.obtainNotificationPermission();
+        Notifications.presentLocalNotificationAsync({
+            title: 'Your Reservation',
+            body: 'Reservation for '+ date + ' requested',
+            ios: {
+                sound: true
+            },
+            android: {
+                sound: true,
+                vibrate: true,
+                color: '#512DA8'
+            }
         });
     }
     
